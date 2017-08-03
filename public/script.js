@@ -53,27 +53,32 @@ function initCanvas(imgUrl, response) {
 // Iterates each annotation in the response and
 // calls to the respective drawing method.
 function drawOutput(responses, imgObj, context) {
-    for (var i = 0; i < responses.length; i++) {
-        var response = responses[i];
-        // console.log(response);
+    // for (var i = 0; i < responses.length; i++) {
+    //     var response = responses[i];
+    //     console.log(response);
 
-        // switch (response) {
-        //   case label_1:
-        //     drawFace(response.faceAnnotations, imgObj, context);
-        //     break;
-        //   case label_1:
-        //     drawFace(response.faceAnnotations, imgObj, context);
-        //     break;
-        //   default:
-        //     // statements_def
-        //     break;
-        // }
+    //     // switch (response) {
+    //     //   case label_1:
+    //     //     drawFace(response.faceAnnotations, imgObj, context);
+    //     //     break;
+    //     //   case label_1:
+    //     //     drawFace(response.faceAnnotations, imgObj, context);
+    //     //     break;
+    //     //   default:
+    //     //     // statements_def
+    //     //     break;
+    //     // }
 
-        if (response.textAnnotations) {
-            drawText(response.textAnnotations, imgObj, context);
-        } else if (response.faceAnnotations) {
-            drawFace(response.faceAnnotations, imgObj, context);
-        }
+    //     if (response.textAnnotations) {
+    //         drawText(response.textAnnotations, imgObj, context);
+    //     } else if (response.faceAnnotations) {
+    //         drawFace(response.faceAnnotations, imgObj, context);
+    //     }
+    // }
+    if (responses.responses[0].textAnnotations){
+      console.log('text');
+    } else if (responses.responses[0].faceAnnotations){
+      console.log('image');
     }
 }
 
