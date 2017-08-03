@@ -95,7 +95,7 @@ function drawFace(faceAnnotations, imgObj, context) {
 function drawText(textAnnotations, imgObj, context) {
     for (var i = 0; i < textAnnotations.length; i++) {
         var annotation = textAnnotations[i];
-        var regex = new Regex(@"^-*[0-9,\.]+$");
+        var regex = /^-*[0-9,\.]+$/ig;
         var numbers = annotation.description;
 
         var checkNumber = numbers.test(regex);
