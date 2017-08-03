@@ -41,8 +41,8 @@ function initCanvas(imgUrl, response) {
             imageHeight: scaledImageHeight
         };
 
-        console.log(response);
-        
+        console.log(JSON.parse(response), this, context);
+
         context.drawImage(imgObj, 0, 0, imgObj.width, imgObj.height,
             centerShiftX, centerShiftY, scaledImageWidth, scaledImageHeight);
 
