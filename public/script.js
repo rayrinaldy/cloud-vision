@@ -57,6 +57,8 @@ function drawOutput(responses, imgObj, context) {
     var response = responses[i];
     if (response.faceAnnotations) {
       drawFace(response.faceAnnotations, imgObj, context);
+    } else if (response.textAnnotations){
+      drawText(response.textAnnotations, imgObj, context);
     }
   }
 }
@@ -66,6 +68,19 @@ function drawOutput(responses, imgObj, context) {
 function drawFace(faceAnnotations, imgObj, context) {
   for (var i = 0; i < faceAnnotations.length; i++) {
     var annotation = faceAnnotations[i];
+
+    drawRectangle(annotation.boundingPoly.vertices, imgObj, context);
+
+    // Part that encloses only the skin part of the face
+    drawRectangle(annotation.fdBoundingPoly.vertices, imgObj, context);
+
+    drawCircles(annotation.landmarks, imgObj, context);
+  }
+}
+
+function drawText(textAnnotations, imgObj, context) {
+  for (var i = 0; i < textAnnotations.length; i++) {
+    var annotation = textAnnotations[i];
 
     drawRectangle(annotation.boundingPoly.vertices, imgObj, context);
 

@@ -26,7 +26,7 @@ module.exports = {
   port: process.env.PORT || 8080,
 
   // Secret is used by sessions to encrypt the cookie.
-  secret: process.env.SESSION_SECRET || 'your-secret-here',
+  secret: process.env.SESSION_SECRET || '592111780548-6hil3opcfdo420b3u80pp6ksjvajsb8d',
 
   // The client ID and secret can be obtained by generating a new web
   // application client ID on Google Developers Console.
