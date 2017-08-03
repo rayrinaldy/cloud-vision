@@ -41,8 +41,6 @@ function initCanvas(imgUrl, response) {
             imageHeight: scaledImageHeight
         };
 
-        console.log(JSON.parse(response), this, context);
-
         context.drawImage(imgObj, 0, 0, imgObj.width, imgObj.height,
             centerShiftX, centerShiftY, scaledImageWidth, scaledImageHeight);
 
@@ -57,7 +55,7 @@ function initCanvas(imgUrl, response) {
 function drawOutput(responses, imgObj, context) {
     for (var i = 0; i < responses.length; i++) {
         var response = responses[i];
-        console.log(response);
+        // console.log(response);
         if (response.faceAnnotations) {
             drawFace(response.faceAnnotations, imgObj, context);
         } else if (response.textAnnotations) {
@@ -84,13 +82,17 @@ function drawFace(faceAnnotations, imgObj, context) {
 function drawText(textAnnotations, imgObj, context) {
     for (var i = 0; i < textAnnotations.length; i++) {
         var annotation = textAnnotations[i];
+        var regex = new Regex(@"^-*[0-9,\.]+$");
+        var numbers = annotation.description;
+
+        var checkNumber = numbers.test(regex);
 
         drawRectangle(annotation.boundingPoly.vertices, imgObj, context);
 
         // Part that encloses only the skin part of the face
-        drawRectangle(annotation.fdBoundingPoly.vertices, imgObj, context);
+        drawRectangle2(checkNumber, imgObj, context);
 
-        drawCircles(annotation.landmarks, imgObj, context);
+        // drawCircles(annotation.landmarks, imgObj, context);
     }
 }
 
@@ -127,6 +129,30 @@ function drawRectangle(vertices, imgObj, context) {
     context.beginPath();
     context.lineWidth = 1;
     context.strokeStyle = 'red';
+    context.rect(
+        topLeft.x,
+        topLeft.y,
+        bottomRight.x - topLeft.x,
+        bottomRight.y - topLeft.y
+    );
+    context.stroke();
+}
+
+function drawRectangle2(vertices, imgObj, context) {
+    var v1 = getMinVertice(vertices);
+    var v2 = getMaxVertice(vertices);
+    var topLeft = {
+        x: scaleX(v1.x, imgObj, context),
+        y: scaleY(v1.y, imgObj, context)
+    };
+    var bottomRight = {
+        x: scaleX(v2.x, imgObj, context),
+        y: scaleY(v2.y, imgObj, context)
+    };
+
+    context.beginPath();
+    context.lineWidth = 1;
+    context.strokeStyle = 'green';
     context.rect(
         topLeft.x,
         topLeft.y,
