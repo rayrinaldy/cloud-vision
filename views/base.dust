@@ -36,10 +36,20 @@
         <h3>Google Cloud Vision</h3>
 
         <form action="/" method="post" enctype="multipart/form-data">
-            <div class="form-group">
-              <label for="image">Image</label>
-              <input type="file" name="image" id="image" class="form-control">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" name="image" id="image" class="form-control">
+              </div>
             </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label for="image">Image</label>
+                <input type="file" name="image" id="image" class="form-control">
+              </div>
+            </div>
+          </div>
 
             {?featureTypes}
               <div class="form-group">
@@ -78,14 +88,31 @@
                 <div class="panel-heading">
                   <h3 class="panel-title">Output</h3>
                 </div>
-                <div id="panel-body" class="panel-body">
-                  {?.prettyprint}
-                    <pre class="prettyprint">{.prettyprint}</pre>
-                  {/.prettyprint}
-                  <canvas id="panel-canvas" class="canvas"></canvas>
-                  <script>
-                    initCanvas('{.imageUrl}', '{.response|s}');
-                  </script>
+
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div id="panel-body" class="panel-body">
+                      {?.prettyprint}
+                        <pre class="prettyprint">{.prettyprint}</pre>
+                      {/.prettyprint}
+                      <canvas id="panel-canvas" class="canvas"></canvas>
+                      <script>
+                        initCanvas('{.imageUrl}', '{.response|s}');
+                      </script>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6">
+                    <div id="panel-body" class="panel-body">
+                      {?.prettyprint}
+                        <pre class="prettyprint">{.prettyprint}</pre>
+                      {/.prettyprint}
+                      <canvas id="panel-canvas" class="canvas"></canvas>
+                      <script>
+                        initCanvas('{.imageUrl}', '{.response|s}');
+                      </script>
+                    </div>
+                  </div>
                 </div>
               </div>
             {/vision}
