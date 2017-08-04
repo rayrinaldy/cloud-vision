@@ -82,7 +82,11 @@
             </div>  
           </form>
 
-          {?vision}
+          {#data}
+            <p>{.}</p>
+          {/data}
+
+          <!-- {?vision}
             {#vision}
               <div class="panel panel-default">
                 <div class="panel-heading">
@@ -116,7 +120,7 @@
                 </div>
               </div>
             {/vision}
-          {/vision}
+          {/vision} -->
 
           {?error}
             <div class="alert alert-danger" role="alert">{error}</div>

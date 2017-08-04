@@ -31,9 +31,10 @@ var cloudVisionClient = require('./lib/cloudVisionClient')(
 var app = express();
 
 // Set view template engine
-app.engine('dust', adaro.dust());
+// app.engine('dust', adaro.dust());
+// app.engine('pug');
+app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'dust');
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Configure the session and session storage.
