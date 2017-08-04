@@ -44,8 +44,6 @@ function initCanvas(imgUrl, response) {
         context.drawImage(imgObj, 0, 0, imgObj.width, imgObj.height,
             centerShiftX, centerShiftY, scaledImageWidth, scaledImageHeight);
 
-
-
         // console.log(response);
         // var Response = JSON.stringify(response);
 
@@ -91,10 +89,10 @@ function drawFace(faceAnnotations, imgObj, context) {
     for (var i = 0; i < faceAnnotations.length; i++) {
         var annotation = faceAnnotations[i];
 
-        drawRectangle(annotation.boundingPoly.vertices, imgObj, context);
+        drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'red', 1);
 
         // Part that encloses only the skin part of the face
-        drawRectangle(annotation.fdBoundingPoly.vertices, imgObj, context);
+        drawRectangle(annotation.fdBoundingPoly.vertices, imgObj, context, 'green', 1);
 
         drawCircles(annotation.landmarks, imgObj, context);
     }
@@ -113,9 +111,9 @@ function drawText(textAnnotations, imgObj, context) {
         // var checkNumber = regex.test(numbers);
 
         if(regex.test(numbers)){
-          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'blue');
+          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'red', 2);
         }else{
-          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'yellow');
+          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'green', 1);
         }
 
 
@@ -144,7 +142,7 @@ function drawCircles(landmarks, imgObj, context) {
 }
 
 // Draws a rectangle using the top left and right bottom vertices.
-function drawRectangle(vertices, imgObj, context, color) {
+function drawRectangle(vertices, imgObj, context, color, lineWidth) {
     var v1 = getMinVertice(vertices);
     var v2 = getMaxVertice(vertices);
     var topLeft = {
@@ -157,7 +155,7 @@ function drawRectangle(vertices, imgObj, context, color) {
     };
 
     context.beginPath();
-    context.lineWidth = 1;
+    context.lineWidth = lineWidth;
     context.strokeStyle = color;
     context.rect(
         topLeft.x,
