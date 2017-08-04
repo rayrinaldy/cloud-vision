@@ -51,15 +51,6 @@ function initCanvas(imgUrl, response) {
 
         var teststring = response.replace(/\n/g, ' ');
 
-        // var myEscapedJSONString = response.replace(/\\n/g, "\\n")
-        //                               .replace(/\\'/g, "\\'")
-        //                               .replace(/\\"/g, '\\"')
-        //                               .replace(/\\&/g, "\\&")
-        //                               .replace(/\\r/g, "\\r")
-        //                               .replace(/\\t/g, "\\t")
-        //                               .replace(/\\b/g, "\\b")
-        //                               .replace(/\\f/g, "\\f");
-
         drawOutput(JSON.parse(teststring), this, context);
         // drawOutput(response, this, context);
     };
@@ -78,18 +69,6 @@ function drawOutput(responses, imgObj, context) {
     for (var i = 0; i < responses.length; i++) {
         var response = responses[i];
         // console.log(response);
-
-        // switch (response) {
-        //   case label_1:
-        //     drawFace(response.faceAnnotations, imgObj, context);
-        //     break;
-        //   case label_1:
-        //     drawFace(response.faceAnnotations, imgObj, context);
-        //     break;
-        //   default:
-        //     // statements_def
-        //     break;
-        // }
 
         if (response.textAnnotations) {
             drawText(response.textAnnotations, imgObj, context);
@@ -180,30 +159,6 @@ function drawRectangle(vertices, imgObj, context, color) {
     context.beginPath();
     context.lineWidth = 1;
     context.strokeStyle = color;
-    context.rect(
-        topLeft.x,
-        topLeft.y,
-        bottomRight.x - topLeft.x,
-        bottomRight.y - topLeft.y
-    );
-    context.stroke();
-}
-
-function drawRectangle2(vertices, imgObj, context) {
-    var v1 = getMinVertice(vertices);
-    var v2 = getMaxVertice(vertices);
-    var topLeft = {
-        x: scaleX(v1.x, imgObj, context),
-        y: scaleY(v1.y, imgObj, context)
-    };
-    var bottomRight = {
-        x: scaleX(v2.x, imgObj, context),
-        y: scaleY(v2.y, imgObj, context)
-    };
-
-    context.beginPath();
-    context.lineWidth = 1;
-    context.strokeStyle = 'green';
     context.rect(
         topLeft.x,
         topLeft.y,

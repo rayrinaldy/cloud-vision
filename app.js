@@ -37,16 +37,16 @@ app.set('view engine', 'dust');
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Configure the session and session storage.
-// app.use(session({
-//   secret: config.secret,
-//   signed: true
-// }));
+app.use(session({
+  secret: config.secret,
+  signed: true
+}));
 
 // OAuth2
-// var oauth2 = require('./lib/oauth2')(config.oauth2);
-// app.use(oauth2.router);
-// app.use(oauth2.aware);
-// app.use(oauth2.template);
+var oauth2 = require('./lib/oauth2')(config.oauth2);
+app.use(oauth2.router);
+app.use(oauth2.aware);
+app.use(oauth2.template);
 
 // Configure routes
 app.use('/', require('./lib/routes')(
