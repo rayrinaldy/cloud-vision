@@ -28,14 +28,13 @@ module.exports = {
   // Secret is used by sessions to encrypt the cookie.
   secret: process.env.SESSION_SECRET || '592111780548-6hil3opcfdo420b3u80pp6ksjvajsb8d',
 
-  // The client ID and secret can be obtained by generating a new web
-  // application client ID on Google Developers Console.
-  oauth2: {
-    clientId: process.env.OAUTH_CLIENT_ID || clientId,
-    clientSecret: process.env.OAUTH_CLIENT_SECRET || clientSecret,
-    redirectUrl: process.env.OAUTH2_CALLBACK || redirectUrl,
-    scopes: ['email', 'profile']
-  },
+  // The client ID and secret can be obtained by generating a new web application client ID on Google Developers Console.
+  // oauth2: {
+  //   clientId: process.env.OAUTH_CLIENT_ID || clientId,
+  //   clientSecret: process.env.OAUTH_CLIENT_SECRET || clientSecret,
+  //   redirectUrl: process.env.OAUTH2_CALLBACK || redirectUrl,
+  //   scopes: ['email', 'profile']
+  // },
 
   // Google Developers Console Project Id.
   gcloud: {
