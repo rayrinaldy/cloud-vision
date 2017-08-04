@@ -44,42 +44,66 @@ function initCanvas(imgUrl, response) {
         context.drawImage(imgObj, 0, 0, imgObj.width, imgObj.height,
             centerShiftX, centerShiftY, scaledImageWidth, scaledImageHeight);
 
-        drawOutput(JSON.parse(response), this, context);
+
+
+        // console.log(response);
+        // var Response = JSON.stringify(response);
+
+        var teststring = response.replace(/\n/g, ' ');
+
+        // var myEscapedJSONString = response.replace(/\\n/g, "\\n")
+        //                               .replace(/\\'/g, "\\'")
+        //                               .replace(/\\"/g, '\\"')
+        //                               .replace(/\\&/g, "\\&")
+        //                               .replace(/\\r/g, "\\r")
+        //                               .replace(/\\t/g, "\\t")
+        //                               .replace(/\\b/g, "\\b")
+        //                               .replace(/\\f/g, "\\f");
+
+        drawOutput(JSON.parse(teststring), this, context);
+        // drawOutput(response, this, context);
     };
 
     imgObj.src = imgUrl;
 }
 
+// var teststring = test().replace(/\n/g, ' ');
+// drawOutput(teststring);
+
 // Iterates each annotation in the response and
 // calls to the respective drawing method.
 function drawOutput(responses, imgObj, context) {
-    // for (var i = 0; i < responses.length; i++) {
-    //     var response = responses[i];
-    //     console.log(response);
 
-    //     // switch (response) {
-    //     //   case label_1:
-    //     //     drawFace(response.faceAnnotations, imgObj, context);
-    //     //     break;
-    //     //   case label_1:
-    //     //     drawFace(response.faceAnnotations, imgObj, context);
-    //     //     break;
-    //     //   default:
-    //     //     // statements_def
-    //     //     break;
-    //     // }
+    // var jsonParse = JSON.parse(responses);
+    for (var i = 0; i < responses.length; i++) {
+        var response = responses[i];
+        // console.log(response);
 
-    //     if (response.textAnnotations) {
-    //         drawText(response.textAnnotations, imgObj, context);
-    //     } else if (response.faceAnnotations) {
-    //         drawFace(response.faceAnnotations, imgObj, context);
-    //     }
-    // }
-    if (responses.responses[0].textAnnotations){
-      console.log('text');
-    } else if (responses.responses[0].faceAnnotations){
-      console.log('image');
+        // switch (response) {
+        //   case label_1:
+        //     drawFace(response.faceAnnotations, imgObj, context);
+        //     break;
+        //   case label_1:
+        //     drawFace(response.faceAnnotations, imgObj, context);
+        //     break;
+        //   default:
+        //     // statements_def
+        //     break;
+        // }
+
+        if (response.textAnnotations) {
+            drawText(response.textAnnotations, imgObj, context);
+        } else if (response.faceAnnotations) {
+            drawFace(response.faceAnnotations, imgObj, context);
+        }
     }
+    // if (responses.responses[0].textAnnotations){
+    //   console.log('text');
+    // } else if (responses.responses[0].faceAnnotations){
+    //   console.log('image');
+    // }
+
+    // console.log(responses);
 }
 
 // Draws two boxes surrounding the head and the skin part of the face
@@ -100,15 +124,24 @@ function drawFace(faceAnnotations, imgObj, context) {
 function drawText(textAnnotations, imgObj, context) {
     for (var i = 0; i < textAnnotations.length; i++) {
         var annotation = textAnnotations[i];
-        var regex = /^-*[0-9,\.]+$/ig;
+
+        var regex = /^[0-9]+$/ig;
         var numbers = annotation.description;
 
-        var checkNumber = numbers.test(regex);
+        // console.log(numbers);
+        // regex.test(numbers);
 
-        drawRectangle(annotation.boundingPoly.vertices, imgObj, context);
+        // var checkNumber = regex.test(numbers);
+
+        if(regex.test(numbers)){
+          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'blue');
+        }else{
+          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'yellow');
+        }
+
 
         // Part that encloses only the skin part of the face
-        drawRectangle2(checkNumber, imgObj, context);
+        // drawRectangle2(checkNumber, imgObj, context);
 
         // drawCircles(annotation.landmarks, imgObj, context);
     }
@@ -132,7 +165,7 @@ function drawCircles(landmarks, imgObj, context) {
 }
 
 // Draws a rectangle using the top left and right bottom vertices.
-function drawRectangle(vertices, imgObj, context) {
+function drawRectangle(vertices, imgObj, context, color) {
     var v1 = getMinVertice(vertices);
     var v2 = getMaxVertice(vertices);
     var topLeft = {
@@ -146,7 +179,7 @@ function drawRectangle(vertices, imgObj, context) {
 
     context.beginPath();
     context.lineWidth = 1;
-    context.strokeStyle = 'red';
+    context.strokeStyle = color;
     context.rect(
         topLeft.x,
         topLeft.y,
