@@ -55,18 +55,18 @@ app.use('/', require('./lib/routes')(
   cloudVisionClient
 ));
 
-// Basic 404 handler
-app.use(function(req, res) {
+// // Basic 404 handler
+app.use(function(req, res, next) {
   res.status(404).send('Not Found');
 });
 
-// Basic error handler
-app.use(function(err, req, res, next) {
-  console.error(err);
+// // Basic error handler
+// app.use(function(err, req, res, next) {
+//   console.error(err);
 
-  // Send response if exists, if not send a custom message
-  res.status(500).send(err.response || 'Server failed!');
-});
+//   // Send response if exists, if not send a custom message
+//   res.status(500).send(err.response || 'Server failed!');
+// });
 
 // Start the server
 var server = app.listen(process.env.PORT || 8080, function() {

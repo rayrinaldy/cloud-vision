@@ -52,18 +52,18 @@ html(lang='en')
 						button.btn.btn-success(type='submit') Submit
 
 				if data
-					-console.log(data)
+					-console.log(data, 'from front end');
 					.panel.panel-default
 						.panel-heading
 							h3.panel-title Output
 						.row
 							each output in data
-								-console.log(output.prettyprint)
-								-console.log(output.imageUrl)
-								-console.log(output.response)
+								// -console.log(output.prettyprint)
+								// -console.log(output.imageUrl)
+								// -console.log(output.response)
 								.col-sm-6
 									#panel-body.panel-body
 										pre.prettyprint!=output.prettyprint
 										canvas#panel-canvas.canvas
 										script.
-											initCanvas(#{output.imageUrl}, #{output.response});
+											initCanvas("#{output.imageUrl}", "#{output.response}");
