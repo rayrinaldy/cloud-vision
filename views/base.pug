@@ -66,4 +66,5 @@ html(lang='en')
 										pre.prettyprint!=output.prettyprint
 										canvas#panel-canvas.canvas
 										script.
-											initCanvas("#{output.imageUrl}", "#{output.response}");
+											var response =!{JSON.stringify(output.response)};  
+											initCanvas("#{output.imageUrl}", response);
