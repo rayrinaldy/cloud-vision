@@ -14,7 +14,7 @@ html(lang='en')
 				.navbar-header
 					a.navbar-brand(href='/') Cloud Vision
 
-
+		-console.log(data)
 		.container
 			.content
 				h3 Google Cloud Vision
@@ -45,6 +45,10 @@ html(lang='en')
 							option 10
 					.form-group
 						button.btn.btn-success(type='submit') Submit
+
+				each items in data
+					p= items.image_url
+					p= items.json_data
 
 				if context
 					.panel.panel-default

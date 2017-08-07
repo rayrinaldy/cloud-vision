@@ -3,6 +3,8 @@
 var express = require('express');
 var path = require('path');
 var session = require('cookie-session');
+var mongoose = require('mongoose');
+var app = express();
 
 // Setup modules and dependencies
 var config = require('./config');
@@ -14,7 +16,15 @@ var cloudVisionClient = require('./lib/cloudVisionClient')(
   config.gcloudVision
 );
 
-var app = express();
+mongoose.connect('mongodb://localhost/ocr', function(err){
+  if(err){
+    console.log('\x1b[36m%s\x1b[0m','Cannot connect to the database');
+  } else{
+    console.log('\x1b[31m','Connected to database at port','\x1b[32m','27017');
+    // console.log('\x1b[32m','27017');
+  }
+});
+
 
 // Set view template engine
 app.set('view engine', 'pug');
