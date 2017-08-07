@@ -1,15 +1,28 @@
 'use strict';
 
+$('.img-ocr').each(function(){
+    $(this).click(function(){
+        var imgUrl = $(this).attr('src');
+        var imgJson = $(this).data('json');
+        $("#myModal").modal();
+        $("#myModal").on('shown.bs.modal', function () {
+            initCanvas(imgUrl, imgJson);
+        });
+    });
+});
+
 // Initializes the canvas, draws an image scaling its size
 // and shifts the position to the center of the screen.
 function initCanvas(imgUrl, response) {
     var canvas = document.getElementById('panel-canvas');
-    var panelBody = document.getElementById('panel-body');
+    var panelBody = document.getElementById('#myModal');
+    var modalBody = $('.modal-body').innerWidth();
+    console.log(modalBody);
     var context = canvas.getContext('2d');
     var imgObj = new Image();
 
-    context.canvas.width = panelBody.offsetWidth - 100;
-    context.canvas.height = panelBody.offsetHeight;
+    context.canvas.width = window.innerHeight;
+    context.canvas.height = window.innerHeight;
 
     imgObj.onload = function() {
         var hRatio = context.canvas.width / imgObj.width;
@@ -34,9 +47,13 @@ function initCanvas(imgUrl, response) {
         // console.log(response);
         // var Response = JSON.stringify(response);
 
-        var teststring = response.replace(/\n/g, ' ');
+        // var teststring = response.replace(/\n/g, ' ');
 
-        drawOutput(JSON.parse(teststring), this, context);
+        var jsonVal = jQuery.parseJSON(JSON.stringify(response));
+
+        console.log(jsonVal);
+
+        drawOutput(jsonVal, this, context);
         // drawOutput(response, this, context);
     };
 
