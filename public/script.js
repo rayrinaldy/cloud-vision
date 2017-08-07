@@ -67,10 +67,8 @@ function initCanvas(imgUrl, response) {
 // calls to the respective drawing method.
 function drawOutput(responses, imgObj, context) {
 
-    // var jsonParse = JSON.parse(responses);
     for (var i = 0; i < responses.length; i++) {
         var response = responses[i];
-        // console.log(response);
 
         if (response.textAnnotations) {
             drawText(response.textAnnotations, imgObj, context);
@@ -78,13 +76,6 @@ function drawOutput(responses, imgObj, context) {
             drawFace(response.faceAnnotations, imgObj, context);
         }
     }
-    // if (responses.responses[0].textAnnotations){
-    //   console.log('text');
-    // } else if (responses.responses[0].faceAnnotations){
-    //   console.log('image');
-    // }
-
-    // console.log(responses);
 }
 
 // Draws two boxes surrounding the head and the skin part of the face
