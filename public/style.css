@@ -1,17 +1,15 @@
 .prettyprint {
-  max-height: 450px;
-  min-height: 260px;
-  overflow: scroll;
+	max-height: 450px;
+	min-height: 260px;
+	overflow: scroll;
 }
 
 .canvas-wrapper {
- position: relative;
- width: 100%;
- padding-bottom: 100%;
+	text-align: center;
 }
 
 #panel-canvas {
- position: absolute;
- width: 100%;
- height: 100%;
+	max-width: 100%;
+	height: auto;
+	margin: 0 auto;
 }

@@ -8,8 +8,8 @@ function initCanvas(imgUrl, response) {
     var context = canvas.getContext('2d');
     var imgObj = new Image();
 
-    context.canvas.width = panelBody.offsetWidth - 100;
-    context.canvas.height = panelBody.offsetHeight;
+    context.canvas.width = window.innerHeight;
+    context.canvas.height = window.innerHeight;
 
     imgObj.onload = function() {
         var hRatio = context.canvas.width / imgObj.width;
