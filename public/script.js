@@ -41,6 +41,7 @@ function initCanvas(imgUrl, response) {
     };
 
     imgObj.src = imgUrl;
+
 }
 
 // var teststring = test().replace(/\n/g, ' ');
@@ -57,8 +58,12 @@ function drawOutput(responses, imgObj, context) {
 
         if (response.textAnnotations) {
             drawText(response.textAnnotations, imgObj, context);
+            // console.log(response.textAnnotations[0].description);
+            var print = document.getElementsByClassName("prettyprint")[0];
+            print.innerHTML = response.textAnnotations[0].description;
         } else if (response.faceAnnotations) {
             drawFace(response.faceAnnotations, imgObj, context);
+            console.log(response.faceAnnotations);
         }
     }
     // if (responses.responses[0].textAnnotations){
@@ -76,10 +81,10 @@ function drawFace(faceAnnotations, imgObj, context) {
     for (var i = 0; i < faceAnnotations.length; i++) {
         var annotation = faceAnnotations[i];
 
-        drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'red', 1);
+        drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'red', 1, 0);
 
         // Part that encloses only the skin part of the face
-        drawRectangle(annotation.fdBoundingPoly.vertices, imgObj, context, 'green', 1);
+        drawRectangle(annotation.fdBoundingPoly.vertices, imgObj, context, 'green', 1, 0);
 
         drawCircles(annotation.landmarks, imgObj, context);
     }
@@ -98,9 +103,9 @@ function drawText(textAnnotations, imgObj, context) {
         // var checkNumber = regex.test(numbers);
 
         if(regex.test(numbers)){
-          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'red', 2);
+          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'red', 2, 8);
         }else{
-          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'green', 1);
+          // drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'green', 1, 0);
         }
     }
 }
@@ -123,7 +128,7 @@ function drawCircles(landmarks, imgObj, context) {
 }
 
 // Draws a rectangle using the top left and right bottom vertices.
-function drawRectangle(vertices, imgObj, context, color, lineWidth) {
+function drawRectangle(vertices, imgObj, context, color, lineWidth, padding) {
     var v1 = getMinVertice(vertices);
     var v2 = getMaxVertice(vertices);
     var topLeft = {
@@ -139,10 +144,10 @@ function drawRectangle(vertices, imgObj, context, color, lineWidth) {
     context.lineWidth = lineWidth;
     context.strokeStyle = color;
     context.rect(
-        topLeft.x,
-        topLeft.y,
-        bottomRight.x - topLeft.x,
-        bottomRight.y - topLeft.y
+        topLeft.x - (padding/2.2) ,
+        topLeft.y - (padding/2.2),
+        (bottomRight.x - topLeft.x) + padding,
+        (bottomRight.y - topLeft.y) + padding
     );
     context.stroke();
 }
