@@ -102,10 +102,10 @@ function drawText(textAnnotations, imgObj, context) {
 
         // var checkNumber = regex.test(numbers);
 
-        if(regex.test(numbers)){
-          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'red', 2, 8);
+        if(regex.test(numbers) || $.isNumeric(numbers)){
+          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'red', 1, 5);
         }else{
-          // drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'green', 1, 0);
+          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'green', 1, 0);
         }
     }
 }
