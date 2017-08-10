@@ -1,5 +1,8 @@
 'use strict';
 
+var canvas = document.getElementById('panel-canvas');
+var context = canvas.getContext('2d');
+
 $('.img-ocr').each(function(){
     $(this).click(function(){
         var imgUrl = $(this).attr('src');
@@ -8,17 +11,21 @@ $('.img-ocr').each(function(){
         $("#myModal").on('shown.bs.modal', function () {
             initCanvas(imgUrl, imgJson);
         });
+        $("#myModal").on('hidden.bs.modal', function () {
+            var oldcanv = document.getElementById('canvas');
+           document.removeChild(oldcanv);
+        });
     });
 });
 
 // Initializes the canvas, draws an image scaling its size
 // and shifts the position to the center of the screen.
 function initCanvas(imgUrl, response) {
-    var canvas = document.getElementById('panel-canvas');
+    // var canvas = document.getElementById('panel-canvas');
     var panelBody = document.getElementById('#myModal');
     var modalBody = $('.modal-body').innerWidth();
-    console.log(modalBody);
-    var context = canvas.getContext('2d');
+    // console.log(modalBody);
+    // var context = canvas.getContext('2d');
     var imgObj = new Image();
 
     context.canvas.width = window.innerHeight;
@@ -84,10 +91,10 @@ function drawFace(faceAnnotations, imgObj, context) {
     for (var i = 0; i < faceAnnotations.length; i++) {
         var annotation = faceAnnotations[i];
 
-        drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'red', 1);
+        drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'red', 1, 0);
 
         // Part that encloses only the skin part of the face
-        drawRectangle(annotation.fdBoundingPoly.vertices, imgObj, context, 'green', 1);
+        drawRectangle(annotation.fdBoundingPoly.vertices, imgObj, context, 'green', 1, 0);
 
         drawCircles(annotation.landmarks, imgObj, context);
     }
@@ -106,9 +113,9 @@ function drawText(textAnnotations, imgObj, context) {
         // var checkNumber = regex.test(numbers);
 
         if(regex.test(numbers)){
-          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'red', 2);
+          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'red', 2, 8);
         }else{
-          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'green', 1);
+          drawRectangle(annotation.boundingPoly.vertices, imgObj, context, 'green', 1, 0);
         }
     }
 }
@@ -131,7 +138,7 @@ function drawCircles(landmarks, imgObj, context) {
 }
 
 // Draws a rectangle using the top left and right bottom vertices.
-function drawRectangle(vertices, imgObj, context, color, lineWidth) {
+function drawRectangle(vertices, imgObj, context, color, lineWidth, padding) {
     var v1 = getMinVertice(vertices);
     var v2 = getMaxVertice(vertices);
     var topLeft = {
@@ -147,10 +154,10 @@ function drawRectangle(vertices, imgObj, context, color, lineWidth) {
     context.lineWidth = lineWidth;
     context.strokeStyle = color;
     context.rect(
-        topLeft.x,
-        topLeft.y,
-        bottomRight.x - topLeft.x,
-        bottomRight.y - topLeft.y
+        topLeft.x - (padding/2.2) ,
+        topLeft.y - (padding/2.2),
+        (bottomRight.x - topLeft.x) + padding,
+        (bottomRight.y - topLeft.y) + padding
     );
     context.stroke();
 }
