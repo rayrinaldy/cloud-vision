@@ -1,0 +1,3 @@
+[submodule "cloud-vision"]
+	path = cloud-vision
+	url = git@bitbucket.org:ray_rinaldy/cloud-vision.git
